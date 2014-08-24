@@ -48,10 +48,13 @@ lines(xfit, yfit, col="blue", lwd=2)
 ```
 
 This is the same histogram as before but overlayed with a normal curve. Clearly
-is approximatly normal, even with a small bin size.  
+is approximatly normal, even with a small bin size. This is a very good example
+of the central limit theorem which confirms that the distribution of the sample means
+is approximetly normal as the sample size gets larger.
 
 ### 4. Evaluate the coverage of the confidence interval for 1/lambda
 ```{r}
+nosim<-10000
 count<-0
 for (i in 1:nosim) {
     temp<-rexp(n,rate=0.2)
@@ -66,6 +69,9 @@ for (i in 1:nosim) {
 coverage<-100*count/nosim
 ```
 
-Simulated coverage for `r nosim` replications and `r n` sample size. The coverage
-for the confidence interval is about `r coverage` %.
+Simulated coverage for a sample size of `r n` for the confidence interval is about 
+`r coverage` %.Note that the intervals provided in the assignment are biased downwards, 
+that's why the coverage is relatively low.
+
+For the more complete .rmd code please visit my [Github repo](https://github.com/bhorak/Stat_Inference)
 
