@@ -44,7 +44,7 @@ conclusively so we do some inference.
 For this data set I will perform a hypothesis test on wether the means of the 
 "OJ" and "VC" are equal. We assume a significane level=5%, that is if the "p"
 value from our tests is less than 5% we can reject the null hypothesis that 
-there is no difference between the means.
+there is no difference between the means.Note we assume equal variance in each test.
 
 ```{r,echo=FALSE}
 data_0.5<-df[df$dose==0.5,]
