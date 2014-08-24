@@ -1,0 +1,81 @@
+---
+title: "ToothGrowth"
+author: "Bohdan Horak"
+date: "Saturday, August 23, 2014"
+output: pdf_document
+fontsize: 10pt
+---
+
+## Exploratory
+
+```{r,echo=FALSE,include=FALSE}
+library(ggplot2);library(gridExtra);
+data(ToothGrowth)
+```
+
+Here is a summary of the data.
+
+```{r,echo=FALSE}
+summary(ToothGrowth)
+```
+
+Here are a couple bar plots demonstrating the differences between the two supplements,
+by dosage.
+
+```{r,echo=FALSE,fig.height=2.5}
+df<-ToothGrowth
+x<-aggregate(len~supp+dose,mean,data=df)
+dose_05<-x[x$dose==0.5,]
+dose_1<-x[x$dose==1,]
+dose_2<-x[x$dose==2,]
+
+
+barplot1 <- qplot(x=supp, y=len, fill=supp,data=dose_05, geom="bar",stat="identity",position="dodge")+ggtitle("0.5 Dosage")+ guides(fill=FALSE)
+barplot2 <- qplot(x=supp, y=len, fill=supp,data=dose_1, geom="bar",stat="identity",position="dodge")+ggtitle("1.0 Dosage")+ guides(fill=FALSE)
+barplot3 <- qplot(x=supp, y=len, fill=supp,data=dose_2, geom="bar",stat="identity",position="dodge")+ggtitle("2.0 Dosage")+ guides(fill=FALSE)
+grid.arrange(barplot1,barplot2,barplot3,ncol=3)
+```
+
+As we can see "OJ" either outperforms or equals the "VC" supplement.We can't say so 
+conclusively so we do some inference.
+
+## Inference
+
+For this data set I will perform a hypothesis test on wether the means of the 
+"OJ" and "VC" are equal. We assume a significane level=5%, that is if the "p"
+value from our tests is less than 5% we can reject the null hypothesis that 
+there is no difference between the means.
+
+```{r,echo=FALSE}
+data_0.5<-df[df$dose==0.5,]
+data_1<-df[df$dose==1,]
+data_2<-df[df$dose==2,]
+```
+
+### 0.5 Dosage
+
+```{r}
+t.test(len~supp, paired=F,var.equal=F,data=data_0.5)
+```
+As the resultin p value is less than 5% we can say that OJ is statistically better
+at encouraging tooth growth than VC is.
+
+### 1.0 Dosage
+
+```{r}
+t.test(len~supp, paired=F,var.equal=F,data=data_1)
+```
+
+
+As the resultin p value is less than 5% we can say that OJ is statistically better
+at encouraging tooth growth than VC is.
+
+### 2.0 Dosage
+
+```{r}
+t.test(len~supp, paired=F,var.equal=F,data=data_2)
+```
+
+As the resultin p value is greater than 5% we can say that OJ is not statistically different
+at encouraging tooth growth than VC is.
+
